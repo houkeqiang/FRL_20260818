@@ -1,0 +1,498 @@
+<title>从单体信用到产业生态</title>
+<style>
+  :root{
+    --paper:#F3F5F8;
+    --surface:#FFFFFF;
+    --ink:#1C2B3B;
+    --body:#3E4E5E;
+    --muted:#6B7B8A;
+    --line:#DCE4EC;
+    --accent:#1F5FA8;
+    --accent-soft:#E8EFF7;
+    --signal:#A9552A;
+    --good:#1E7A52;
+    --warn:#A9702A;
+    --danger:#B0392E;
+    --chip:#EDF1F6;
+    --font-display:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+    --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    --font-mono:"SF Mono","Cascadia Mono",Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E151C;
+      --surface:#161F28;
+      --ink:#E6EDF3;
+      --body:#B6C2CD;
+      --muted:#8293A1;
+      --line:#263442;
+      --accent:#6FA8DC;
+      --accent-soft:#1C2A38;
+      --signal:#D08A5C;
+      --good:#5CB98A;
+      --warn:#D1A14F;
+      --danger:#DD6B5C;
+      --chip:#1C2730;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E151C;
+    --surface:#161F28;
+    --ink:#E6EDF3;
+    --body:#B6C2CD;
+    --muted:#8293A1;
+    --line:#263442;
+    --accent:#6FA8DC;
+    --accent-soft:#1C2A38;
+    --signal:#D08A5C;
+    --good:#5CB98A;
+    --warn:#D1A14F;
+    --danger:#DD6B5C;
+    --chip:#1C2730;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--body);
+    font-family:var(--font-body);line-height:1.75;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px}
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+  nav a{
+    white-space:nowrap;text-decoration:none;color:var(--muted);
+    font-size:13px;padding:3px 10px;border-radius:999px;
+    border:1px solid transparent;transition:color .15s,background .15s;
+  }
+  nav a:hover{color:var(--accent);background:var(--chip)}
+  header{padding:64px 0 40px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);font-family:var(--font-mono);margin-bottom:18px;
+  }
+  h1{
+    font-family:var(--font-display);font-weight:700;color:var(--ink);
+    font-size:clamp(32px,5.4vw,52px);line-height:1.18;text-wrap:balance;
+    letter-spacing:.02em;
+  }
+  .subtitle{
+    margin-top:18px;font-size:17px;color:var(--body);max-width:62ch;
+    text-wrap:balance;
+  }
+  .meta{
+    margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 20px;
+    font-family:var(--font-mono);font-size:12.5px;color:var(--muted);
+  }
+  .meta span b{color:var(--ink);font-weight:600}
+  section{margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .sec-num{
+    font-family:var(--font-mono);font-size:13px;color:var(--accent);
+    font-variant-numeric:tabular-nums;letter-spacing:.05em;
+  }
+  h2{
+    font-family:var(--font-display);font-weight:700;color:var(--ink);
+    font-size:clamp(22px,3vw,28px);line-height:1.3;text-wrap:balance;
+  }
+  h3{font-family:var(--font-display);color:var(--ink);font-size:19px;font-weight:600;text-wrap:balance}
+  p{margin:0 0 14px;max-width:70ch}
+  .pull{
+    border-left:3px solid var(--accent);background:var(--surface);
+    border-radius:0 12px 12px 0;padding:26px 28px;
+    font-family:var(--font-display);font-size:19px;line-height:1.7;color:var(--ink);
+    box-shadow:0 1px 0 var(--line);
+  }
+  .pull .who{
+    display:block;margin-top:12px;font-family:var(--font-mono);
+    font-size:12px;letter-spacing:.14em;color:var(--muted);
+  }
+  /* timeline */
+  .timeline{position:relative;margin-top:8px;padding-left:0}
+  .tl-item{position:relative;padding:0 0 22px 34px;border-left:1px solid var(--line)}
+  .tl-item:last-child{border-left-color:transparent;padding-bottom:4px}
+  .tl-item::before{
+    content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 3px var(--paper);
+  }
+  .tl-item h4{font-size:15px;color:var(--ink);font-weight:600;margin-bottom:2px}
+  .tl-item .t-d{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);letter-spacing:.06em}
+  .tl-item p{font-size:14.5px;color:var(--body);margin-top:6px}
+  /* table */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  table{width:100%;border-collapse:collapse;min-width:640px;font-size:14px}
+  caption{caption-side:top;text-align:left;padding:12px 18px;font-family:var(--font-mono);font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);background:var(--chip)}
+  th{
+    text-align:left;font-weight:600;color:var(--ink);background:var(--chip);
+    padding:11px 16px;font-size:12.5px;letter-spacing:.04em;white-space:nowrap;
+  }
+  td{padding:11px 16px;border-top:1px solid var(--line);vertical-align:top;color:var(--body)}
+  td:first-child,th:first-child{white-space:nowrap;color:var(--ink);font-weight:600}
+  td ul{margin:0;padding-left:18px}
+  td li{margin-bottom:4px}
+  .mono{font-family:var(--font-mono);font-size:12px;color:var(--accent);white-space:nowrap}
+  .mono::before{content:"manu/"}
+  /* six-layer stack */
+  .stack{margin-top:10px}
+  .layer{
+    display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:center;
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:12px 18px;
+  }
+  .layer .lv{font-family:var(--font-display);color:var(--ink);font-weight:700;font-size:16px}
+  .layer .lc{font-size:13.5px;color:var(--body)}
+  .layer .lc .tag{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);margin-right:10px}
+  .badge{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .b-ok{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good)}
+  .b-part{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
+  .b-gap{background:color-mix(in srgb,var(--danger) 13%,transparent);color:var(--danger)}
+  .arrow{
+    text-align:center;color:var(--muted);font-family:var(--font-mono);
+    font-size:13px;line-height:1.1;padding:3px 0;user-select:none;
+  }
+  .stacknote{margin-top:14px;font-size:14px;color:var(--muted)}
+  /* perspective cards */
+  .cards{display:grid;grid-template-columns:1fr;gap:18px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;
+  }
+  .card-top{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+  .pnum{font-family:var(--font-mono);font-size:12px;color:var(--signal);letter-spacing:.1em}
+  .card h3{font-size:18px}
+  .card .row{margin-top:10px}
+  .card .lab{
+    display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
+    color:var(--accent);text-transform:uppercase;margin-bottom:4px;
+  }
+  .card .row p,.card .row ul{margin:0;font-size:14.5px}
+  .card .row ul{padding-left:18px}
+  .card .row li{margin-bottom:4px}
+  .card .break{
+    border-top:1px dashed var(--line);margin-top:12px;padding-top:10px;
+  }
+  .card .break .lab{color:var(--signal)}
+  /* checklist */
+  .checklist{display:grid;grid-template-columns:1fr;gap:12px}
+  .ck{
+    display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;
+  }
+  .ck .n{
+    font-family:var(--font-mono);font-weight:700;color:var(--accent);
+    font-size:15px;text-align:center;padding-top:3px;font-variant-numeric:tabular-nums;
+  }
+  .ck h4{font-size:15px;color:var(--ink);font-weight:600}
+  .ck p{font-size:13.5px;color:var(--muted);margin:3px 0 0}
+  /* callout */
+  .callout{
+    border-radius:14px;padding:26px 28px;margin-top:8px;
+    background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));
+  }
+  .callout .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+  .callout .big{
+    font-family:var(--font-display);font-size:21px;line-height:1.55;color:var(--ink);
+    font-weight:700;margin:10px 0;text-wrap:balance;
+  }
+  .callout p{font-size:14.5px;margin:0}
+  .risk{
+    margin-top:14px;border:1px solid color-mix(in srgb,var(--signal) 40%,var(--line));
+    border-radius:12px;padding:18px 22px;background:color-mix(in srgb,var(--signal) 6%,var(--surface));
+  }
+  .risk .lab{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--signal);text-transform:uppercase}
+  .risk p{font-size:14px;margin:8px 0 0}
+  /* appendix */
+  .appendix ul{padding-left:0;list-style:none}
+  .appendix li{
+    display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;
+    padding:10px 0;border-bottom:1px dashed var(--line);font-size:14.5px;
+  }
+  .appendix li:last-child{border-bottom:none}
+  .appendix .a-name{color:var(--ink);font-weight:600}
+  .appendix .a-note{font-family:var(--font-mono);font-size:12px;color:var(--muted);text-align:right}
+  footer{
+    margin-top:72px;border-top:1px solid var(--line);padding:26px 0 60px;
+    font-size:12.5px;color:var(--muted);
+  }
+  footer p{margin:0 0 6px;max-width:70ch}
+  @media (max-width:620px){
+    .layer{grid-template-columns:1fr;gap:6px}
+    .layer .badge{justify-self:start}
+    header{padding:44px 0 28px}
+    .pull{font-size:17px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<nav>
+  <div class="wrap">
+    <a href="#s0">脉络</a>
+    <a href="#s1">核心判断</a>
+    <a href="#s2">能力地图</a>
+    <a href="#s3">生态六层</a>
+    <a href="#s4">六大视角</a>
+    <a href="#s5">验证要求</a>
+    <a href="#s6">总课题</a>
+    <a href="#s7">附录</a>
+  </div>
+</nav>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">研究方向探索报告 · FRL 20260818</div>
+  <h1>从单体信用到产业生态</h1>
+  <p class="subtitle">多源企业信用数据的研究机会地图——说明书揭示的能力、生态六层结构、六大突破视角，以及进入因果研究前的最低验证要求。</p>
+  <div class="meta">
+    <span>日期 <b>2026-08-17</b></span>
+    <span>数据基础 <b>CoporateCredit_Data</b></span>
+    <span>产品口径 <b>47 + 71</b></span>
+    <span>说明书 <b>8 份</b></span>
+  </div>
+</header>
+
+<section id="s0">
+  <div class="sec-head"><span class="sec-num">00</span><h2>对话脉络</h2></div>
+  <p>本报告由一次逐步收敛的分析过程沉淀而来。从原始数据目录出发，经过盘点、问题探究、生态头脑风暴与专题深化，最终整合为一份研究方向探索框架。</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <h4>数据盘点</h4>
+      <span class="t-d">STEP 01</span>
+      <p>盘点 47 个上海联合征信产品 + 71 个法人库产品，解码 8 份产品说明书（修复 GBK 文本层），并建立 CLAUDE.md 数据档案。</p>
+    </div>
+    <div class="tl-item">
+      <h4>研究问题探究</h4>
+      <span class="t-d">STEP 02</span>
+      <p>从金融各领域提出 7 个可深入研究的问题（信用风险、网络系统性风险、人力资本、普惠金融、绿色金融、政府采购、司法传染），并识别跨问题数据缺口。</p>
+    </div>
+    <div class="tl-item">
+      <h4>生态头脑风暴</h4>
+      <span class="t-d">STEP 03</span>
+      <p>以产业生态/网络视角发散出 8 条"光线"（R1–R8）：全量数字孪生、知识×资本、产业链韧性、风险传染、影子金融心电图、城市产业心跳、绿色农业、欺诈流行病学。</p>
+    </div>
+    <div class="tl-item">
+      <h4>专题深化</h4>
+      <span class="t-d">STEP 04</span>
+      <p>将 R2（知识流动与资本流动的同构）深化为完整研究设计并归档：<span class="mono">research_design_R2_knowledge_capital.md</span>。</p>
+    </div>
+    <div class="tl-item">
+      <h4>框架整合</h4>
+      <span class="t-d">STEP 05</span>
+      <p>将上述发现与你给定的分析框架合并，形成本份探索报告。</p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">01</span><h2>核心判断</h2></div>
+  <div class="pull">
+    "这些说明书最大的价值，不是直接提供研究样本，而是告诉我们'哪些企业状态可以被测量、如何连接、多久更新、是否需要授权'。将它们组合后，可以把传统单体企业信用研究升级为多层产业生态研究。"
+    <span class="who">核心判断</span>
+  </div>
+  <p style="margin-top:22px">单个产品看似只是信贷风控工具；但把 8 份说明书并排看，字段恰好覆盖一个企业的四个独立维度——资本/结构（企业图谱、变更预警的"变更前→后"差分）、知识/人才（SCI/CNS 归属人才）、经营/价值（税务口径的"迷你财报"与税款入库日期）、风险/事件（司法、税务、处罚）。任何单一供应商只给一层，任何现有学术数据库（CSMAR/Wind）只覆盖上市样本。这套组合在概念上允许对全体非上市中小企业做"资本×知识×经营×风险"的四维观测——这是产业生态研究缺失的那块拼图。</p>
+</section>
+
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">02</span><h2>说明书能力地图</h2></div>
+  <p>各类说明书能支持什么：</p>
+  <div class="tbl-scroll">
+    <table>
+      <caption>资料来源：E:/Agent_Hou/CoporateCredit_Data/manu/</caption>
+      <thead><tr><th>数据能力</th><th>说明书所揭示的信息</th><th>研究用途</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>企业动态</td>
+          <td>法人、股东、注册资本、地址、高管等变更事件及日期。<span class="mono">07.pdf</span></td>
+          <td>企业生命周期识别、重大变更预警、控制权变化、空壳化与退出风险</td>
+        </tr>
+        <tr>
+          <td>企业经营"代谢"</td>
+          <td>税务申报、实缴税款、收入、成本、利润、资产、负债、现金流等。<span class="mono">41.pdf</span></td>
+          <td>验证真实经营、现金流质量、盈利持续性、融资约束</td>
+        </tr>
+        <tr>
+          <td>控制与关联网络</td>
+          <td>企业、自然人节点，以及法定代表人、任职、参股关系和持股比例。<span class="mono">57.pdf</span></td>
+          <td>实际控制网络、企业集团、风险传染、隐性关联方、产业组织</td>
+        </tr>
+        <tr>
+          <td>知识与人才资本</td>
+          <td>SCI论文、JCR分区、H-index、教育经历、工作履历等。<span class="mono">32.pdf</span></td>
+          <td>科技企业能力识别、人才资本、科研成果产业化、科技金融</td>
+        </tr>
+        <tr>
+          <td>农业生产能力</td>
+          <td>农场、地块、种养、产量、销量、绿色食品认证等。<span class="mono">27.pdf</span></td>
+          <td>农业产业生态、季节性经营风险、数字抵押与农业信贷</td>
+        </tr>
+        <tr>
+          <td>身份及反欺诈</td>
+          <td>银行卡要素匹配、企业—法人身份匹配及错误码。<span class="mono">39.pdf</span>、<span class="mono">51.pdf</span></td>
+          <td>冒名申请、欺诈团伙、开户与授信核验、误拒风险</td>
+        </tr>
+        <tr>
+          <td>市场触达</td>
+          <td>企业电话、手机、地址等触达线索。<span class="mono">59.pdf</span></td>
+          <td>小微客户发现、金融服务可达性；但隐私与歧视风险较高</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:14px;font-size:13.5px;color:var(--muted)">注：<span class="mono">59.pdf</span> 为纯扫描件（无文本层），其产品内容尚未确认；市场触达类信息涉及隐私与公平性，研究使用需谨慎。</p>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">03</span><h2>产业生态的六层定义</h2></div>
+  <p>建议不要只用"行业分类"定义产业生态，而是建立六层结构——从主体与控制逐层下探到金融结果。现有材料较好覆盖"主体、能力、风险和部分经营代谢"，但最关键的生产网络与金融结果仍需补齐。</p>
+  <div class="stack">
+    <div class="layer"><span class="lv">L1</span><span class="lc">主体与控制层 · 企业、股东、高管、投资关系</span><span class="badge b-ok">已覆盖</span></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><span class="lv">L2</span><span class="lc">生产网络层 · 供应商、客户、发票、流水、海关、招投标</span><span class="badge b-gap">需补齐</span></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><span class="lv">L3</span><span class="lc">经营代谢层 · 收入、税收、电力、现金流、就业</span><span class="badge b-part">部分覆盖</span></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><span class="lv">L4</span><span class="lc">能力层 · 人才、专利、资质、研发、绿色能力</span><span class="badge b-ok">已覆盖</span></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><span class="lv">L5</span><span class="lc">风险层 · 诉讼、处罚、欠税、工商变更、关联方冲击</span><span class="badge b-ok">已覆盖</span></div>
+    <div class="arrow">▼</div>
+    <div class="layer"><span class="lv">L6</span><span class="lc">金融结果层 · 贷款获批、额度、利率、违约、融资结构</span><span class="badge b-gap">需补齐</span></div>
+  </div>
+  <p class="stacknote">结构含义：六层自上而下数据流。当前缺口集中在 L2（生产网络）与 L6（金融结果）——恰好是"生态如何被交易组织起来"与"生态如何被金融定价"的两端。</p>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">04</span><h2>六大突破视角</h2></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-01</span><h3>产业生态重要性与融资错配</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>产业链中网络中心性高、替代性低，但抵押资产弱的中小企业，是否被传统信贷模型系统性低估？</p></div>
+      <div class="row"><span class="lab">需配合的数据</span>
+        <ul>
+          <li>发票或交易对手网络、订单和海关关系</li>
+          <li>全部申贷样本，包括拒绝者</li>
+          <li>利率、额度、抵押品、还款和违约</li>
+          <li>就业、税收和供应中断结果</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">突破点</span><p>把"企业自身违约风险"扩展为"企业退出造成的网络外部性"。银行可能应支持的不只是最安全企业，还包括生态中不可替代的关键节点。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-02</span><h3>多层网络风险传染</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>将股权/高管网络与真实供应链网络叠加，检验一个节点受到司法、欠税或治理冲击后，风险究竟沿控制关系还是交易关系传播。</p></div>
+      <div class="row"><span class="lab">需配合的数据</span>
+        <ul>
+          <li>版本化网络</li>
+          <li>精确事件时间</li>
+          <li>应收账款、贸易信用和贷款表现</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">识别与局限</span><p>识别上应采用外生节点冲击和动态事件研究，并用不相连企业做安慰剂检验，排除行业共同冲击。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-03</span><h3>"科研资本"能否转化为产业能力</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>把人才论文和 H-index 与专利、研发、收入、出口、融资及企业生存连接，区分三类企业：有科研声誉但尚未商业化；专利较多但缺乏核心人才；人才、技术与经营同时兑现。</p></div>
+      <div class="row"><span class="lab">需配合的数据</span>
+        <ul>
+          <li>专利引用</li>
+          <li>研发投入</li>
+          <li>人才入离职</li>
+          <li>VC 轮次和政府科技项目</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">突破点</span><p>不是证明"论文多的企业更好"，而是识别知识资本转化为现金流和融资能力的条件。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-04</span><h3>绿色标签与真实绿色转型</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>将绿色产品、环保处罚与企业用电、排放、设备投资及绿色贷款连接，检验绿色融资究竟支持了真实减排，还是仅改善了标签。</p></div>
+      <div class="row"><span class="lab">需配合的数据</span>
+        <ul>
+          <li>企业级排放、能源结构</li>
+          <li>绿色认证、环保检查</li>
+          <li>绿色贷款用途和资本开支</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">识别与局限</span><p>若有绿色金融试点、银行政策分批实施或执法轮换，可使用 DID；否则只能做相关性研究。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-05</span><h3>农业经营权的"数字抵押"</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>把农场地块、种养、产销量与遥感、天气、土地经营权、补贴和农产品价格结合，建立可验证的农业生产能力指标，研究其能否替代传统不动产抵押。</p></div>
+      <div class="row"><span class="lab">关键结果</span>
+        <ul>
+          <li>贷款获批、额度、逾期</li>
+          <li>灾害后的恢复速度</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">识别与局限</span><p>最有说服力的设计是征信报告分批推广或政策准入阈值。</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-top"><span class="pnum">PERS-06</span><h3>授权行为本身是否是一种信用信号</h3></div>
+      <div class="row"><span class="lab">研究问题</span><p>税票和流水产品需要企业授权，而大量公开信息产品不需要授权。因此，"企业是否愿意授权"可能本身包含经营质量或融资需求信息。</p></div>
+      <div class="row"><span class="lab">需配合的数据</span>
+        <ul>
+          <li>银行邀请授权、接受、拒绝、撤回及授权时间记录</li>
+        </ul>
+      </div>
+      <div class="row break"><span class="lab">识别与局限</span><p>直接比较授权和未授权企业会有严重选择偏误；最好使用随机授权邀请、分批推广或流程阈值。这个视角相当新，但隐私和公平性要求也最高。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">05</span><h2>数据验证的最低要求</h2></div>
+  <p>在购买或开展研究前，应要求供应商提供以下七项最低验证材料：</p>
+  <div class="checklist">
+    <div class="ck"><span class="n">1</span><div><h4>Point-in-time 历史数据</h4><p>发生日、入库日、查询日、修订日，避免未来信息泄漏。</p></div></div>
+    <div class="ck"><span class="n">2</span><div><h4>覆盖率分母</h4><p>按地区、行业、规模、存续状态报告命中率和缺失率。</p></div></div>
+    <div class="ck"><span class="n">3</span><div><h4>来源与更新机制</h4><p>原始来源、抓取或申报方式、更新延迟、历史回溯深度。</p></div></div>
+    <div class="ck"><span class="n">4</span><div><h4>版本化主体映射</h4><p>统一信用代码、更名、迁址、注销重建及自然人消歧。</p></div></div>
+    <div class="ck"><span class="n">5</span><div><h4>真实结果数据</h4><p>贷款申请与拒绝、定价、还款、违约、就业、收入、排放或创新结果。</p></div></div>
+    <div class="ck"><span class="n">6</span><div><h4>外生识别条件</h4><p>产品上线批次、政策阈值、试点地区、随机邀请或突发冲击。</p></div></div>
+    <div class="ck"><span class="n">7</span><div><h4>外部验证样本</h4><p>至少跨银行、跨地区或跨年份验证，不能只在供应商命中样本上测试。</p></div></div>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><span class="sec-num">06</span><h2>优先总课题</h2></div>
+  <div class="callout">
+    <span class="lab">最值得优先推进</span>
+    <div class="big">多源企业信用数据能否纠正传统信贷对产业链关键中小企业的低估？</div>
+    <p>它把产业网络、信息不对称、信贷配置和产业链韧性连接起来，比单纯做信用评分更具理论与政策突破性。</p>
+  </div>
+  <div class="risk">
+    <span class="lab">反方意见 · 必须正视</span>
+    <p>当前最大的反方意见仍是：说明书属于产品能力声明，尚不能证明真实覆盖率、历史连续性和测量准确性；这些必须通过脱敏样本和结果数据审计后才能进入因果研究。</p>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="sec-head"><span class="sec-num">07</span><h2>附录 · 数据资产清单</h2></div>
+  <div class="appendix">
+    <ul>
+      <li><span class="a-name">上海市联合征信有限公司产品清单.pdf</span><span class="a-note">47 产品 · 场景×数智维度 · 含授权列</span></li>
+      <li><span class="a-name">法人库产品目录_20260414.xlsx</span><span class="a-note">71 产品 + 字段级清单 · 入参统一社会信用代码</span></li>
+      <li><span class="a-name">manu/07 企业智观-变更预警-上海</span><span class="a-note">变更前→后差分 · 上海 · 日更</span></li>
+      <li><span class="a-name">manu/41 经营智观-赋信通</span><span class="a-note">税务申报+财务指标 · 需授权 · 月更</span></li>
+      <li><span class="a-name">manu/57 企业智链-企业图谱</span><span class="a-note">两层关联网络 · 全国 · 日更</span></li>
+      <li><span class="a-name">manu/32 企业人才智观-人才全览</span><span class="a-note">SCI/CNS 人才画像 · 全国 · 日更 · 免授权</span></li>
+      <li><span class="a-name">manu/27 新型农业经营主体征信报告</span><span class="a-note">地块/种养/产量销量 · 需授权 · 月更</span></li>
+      <li><span class="a-name">manu/39 / 51 身份与银行卡核验</span><span class="a-note">要素匹配 + 24 业务场景码</span></li>
+      <li><span class="a-name">manu/59 未知产品</span><span class="a-note">纯扫描件 · 待确认</span></li>
+    </ul>
+  </div>
+  <p style="margin-top:18px;font-size:14px;color:var(--muted)">关键结构性能力：法人主体唯一键、自然人股东/被投资主体唯一键（网络构建）；变更前→后差分（事件研究）；税款入库日期（真实现金流观测）；论文 DOI/归属机构（知识资本锚定）。</p>
+</section>
+
+<footer>
+  <p>本报告基于 <code>E:/Agent_Hou/CoporateCredit_Data</code> 目录内已读取的真实文件撰写；引用的产品能力均来自说明书与产品目录原文。</p>
+  <p>文献方向仅为定位性提示，正式引用前须逐条检索核实；全程遵守"不虚构证据"原则，无未经验证的引用与数据。</p>
+  <p>配套专题设计见 <code>research_design_R2_knowledge_capital.md</code>（知识×资本，已归档）。</p>
+</footer>
+</div>
