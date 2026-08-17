@@ -136,6 +136,11 @@
   td li{margin-bottom:4px}
   .mono{font-family:var(--font-mono);font-size:12px;color:var(--accent);white-space:nowrap}
   .mono::before{content:"manu/"}
+  a.lnk{
+    color:var(--accent);text-decoration:none;font-family:var(--font-mono);font-size:.92em;
+    border-bottom:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);transition:color .15s;
+  }
+  a.lnk:hover{color:var(--signal);border-bottom-color:var(--signal)}
   /* six-layer stack */
   .stack{margin-top:10px}
   .layer{
@@ -276,7 +281,7 @@
     <div class="tl-item">
       <h4>专题深化</h4>
       <span class="t-d">STEP 04</span>
-      <p>将 R2（知识流动与资本流动的同构）深化为完整研究设计并归档：<span class="mono">research_design_R2_knowledge_capital.md</span>。</p>
+      <p>将 R2（知识流动与资本流动的同构）深化为完整研究设计并归档：<a class="lnk" href="research_design_R2_knowledge_capital.md">research_design_R2_knowledge_capital.md</a>。</p>
     </div>
     <div class="tl-item">
       <h4>框架整合</h4>
@@ -493,6 +498,6 @@
 <footer>
   <p>本报告基于 <code>E:/Agent_Hou/CoporateCredit_Data</code> 目录内已读取的真实文件撰写；引用的产品能力均来自说明书与产品目录原文。</p>
   <p>文献方向仅为定位性提示，正式引用前须逐条检索核实；全程遵守"不虚构证据"原则，无未经验证的引用与数据。</p>
-  <p>配套专题设计见 <code>research_design_R2_knowledge_capital.md</code>（知识×资本，已归档）。</p>
+  <p>配套专题设计见 <a class="lnk" href="research_design_R2_knowledge_capital.md">research_design_R2_knowledge_capital.md</a>（知识×资本，已归档）。</p>
 </footer>
 </div>
